@@ -4,6 +4,7 @@ class Person
 {
     //db connection
     private ?mysqli $conn;
+    private string $table;
 
     //properties
     public int $id;
@@ -48,7 +49,7 @@ class Person
     function read(): array
     {
         $query = "SELECT id, nickname 
-                  FROM person
+                  FROM " . $this->table . " 
                   ORDER BY id DESC";
 
         //TODO: implement this PROPERLY, redesign the db
@@ -76,9 +77,29 @@ class Person
         return $data;
     }
 
+    // update account info
+    // TODO: ability to change not only the nickname
+    // TODO: access only for the account owner
+    function update(): bool {
+        $query = "UPDATE " . $this->table . " 
+                  SET nickname = ?
+                  WHERE id = ?";
 
-    function update() {
+        $stmt = $this->conn->prepare($query);
 
+        //clean user-posted data before insertion
+        $this->nickname = htmlspecialchars($this->nickname);
+
+        $stmt->bind_param("si",$this->nickname, $this->id);
+
+        if($stmt->execute()){
+            return true;
+        }
+
+        //print error if something goes wrong
+        printf("Error: " . $stmt->error);
+
+        return false;
     }
 
     function delete() {

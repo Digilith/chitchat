@@ -18,9 +18,7 @@ $person = new Person($db);
 
 $data = $person->read();
 
-// get the amount of registered users
-
-//TODO: make it work!!!
+// checking if any users were fetched
 if(! empty($data)){
 
     echo json_encode($data);
