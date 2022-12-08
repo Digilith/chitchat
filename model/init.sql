@@ -24,10 +24,20 @@ CREATE TABLE IF NOT EXISTS room (
 
 CREATE TABLE IF NOT EXISTS message (
     id INT NOT NULL AUTO_INCREMENT,
-    room_id INT NOT NULL, #in which room was it sent
     person_id INT NOT NULL, #who sent it
+    room_id INT NOT NULL, #in which room was it sent
     message_txt TEXT NOT NULL, #contents
     PRIMARY KEY (id),
+    FOREIGN KEY (room_id) REFERENCES room(id),
+    FOREIGN KEY (person_id) REFERENCES person(id)
+);
+
+CREATE TABLE IF NOT EXISTS requests (
+    id INT NOT NULL AUTO_INCREMENT,
+    person_id INT NOT NULL,
+    room_id INT NOT NULL,
+    request_desc TINYTEXT,
+    status TINYINT NOT NULL, # 0 - pending, 1 - ok, 2 - declined
     FOREIGN KEY (room_id) REFERENCES room(id),
     FOREIGN KEY (person_id) REFERENCES person(id)
 );
