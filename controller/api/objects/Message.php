@@ -10,10 +10,6 @@ class Message
 
     }
 
-    function update () {
-
-    }
-
     function delete () {
 
     }

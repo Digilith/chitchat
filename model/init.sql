@@ -55,3 +55,4 @@ CREATE TABLE IF NOT EXISTS requests (
 # TODO: TRIGGER RULE upon adding a user add them to general
 # TODO: fill out person_room table
 # TODO: TRIGGER RULE upon creating a room add the admin to person_room table
+# TODO: TRIGGER RULE upon deleting a room delete all person_room records and requests w/ it

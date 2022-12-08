@@ -4,13 +4,12 @@ class Person
 {
     //db connection
     private ?mysqli $conn;
-    private $table = "person";
 
     //properties
-    public $id;
-    public $email;
-    public $nickname;
-    public $password_hash;
+    public int $id;
+    public string $email;
+    public string $nickname;
+    public string $password_hash;
 
     //constructor w/ db
     public function __construct($db) {
@@ -36,7 +35,7 @@ class Person
 
         if($stmt->execute()){
             return true;
-        };
+        }
 
         //print error if something goes wrong
         printf("Error: " . $stmt->error);
@@ -46,42 +45,35 @@ class Person
 
     //lists all the users in a room
     //function read($room_id)
-    function read(room_id)
+    function read(): array
     {
         $query = "SELECT id, nickname 
-                  FROM " . $this->table . "
+                  FROM person
                   ORDER BY id DESC";
 
         //TODO: implement this PROPERLY, redesign the db
-//        $query = "SELECT id, nickname
-//                  FROM " . $this->table . " as p
-//                  FULL OUTER JOIN person_room
-//                  ON p.id = person_room.id
-//                  WHERE person_room.room_id = ?
-//                  ORDER BY id DESC
-//                  ";
+//          $query = "SELECT id, nickname
+//                    FROM person as p
+//                    FULL OUTER JOIN person_room
+//                    ON p.id = person_room.id
+//                    WHERE person_room.room_id = ?
+//                    ORDER BY id DESC
+//                    ";
 
-        $stmt = $this->conn->prepare($query);
+        // retrieving an array of rows
+        $stmt = $this->conn->query($query);
 
-//      $stmt->bind_param("i", $room_id);
+        // storing them in data
+        $data = [];
 
-        $stmt->execute();
+        // array of row data
+        while ($row = $stmt->fetch_assoc()) {
+            $data[] = $row;
+        }
 
-        return $stmt;
-    }
+//        $stmt->bind_param("i", $room_id);
 
-    function read_one() {
-        $query = "SELECT id, nickname 
-                  FROM " . $this->table . "
-                  WHERE id = ?";
-
-        $stmt = $this->conn->prepare($query);
-
-        $stmt->bind_param("i", $this->id);
-
-        $stmt->execute();
-
-        return $stmt;
+        return $data;
     }
 
 

@@ -10,13 +10,6 @@ class Request
 
     }
 
-    function read_one() {}
-
-
-    function update() {
-
-    }
-
     function delete() {
 
     }

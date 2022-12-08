@@ -10,14 +10,15 @@ class Room
 
     }
 
-    function read_one() {}
-
-
     function update() {
 
     }
 
     function delete() {
+
+    }
+
+    function delete_person() {
 
     }
 }
