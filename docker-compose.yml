@@ -14,7 +14,7 @@ services:
     build: ./controller
     restart: always
     volumes:
-      - ./controller/content:/var/www/html/
+      - ./controller:/var/www/html/
     ports:
       - "8081:80"
     links:
