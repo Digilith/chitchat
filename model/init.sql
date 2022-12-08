@@ -50,3 +50,8 @@ CREATE TABLE IF NOT EXISTS requests (
     FOREIGN KEY (room_id) REFERENCES room(id),
     FOREIGN KEY (person_id) REFERENCES person(id)
 );
+
+# TODO: add dummy info, 1) room id 1 GENERAL, user id 1 ADMIN 2) other dummy users, rooms, requests
+# TODO: TRIGGER RULE upon adding a user add them to general
+# TODO: fill out person_room table
+# TODO: TRIGGER RULE upon creating a room add the admin to person_room table
