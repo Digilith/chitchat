@@ -21,6 +21,7 @@ $result = $person->read();
 // get the amount of registered users
 $person_count = $result->num_rows();
 
+//TODO: make it work!!!
 if($person_count > 0){
     $person_arr = array();
     $person_arr["data"] = array();
@@ -42,6 +43,6 @@ if($person_count > 0){
 
 } else {
     echo json_encode(
-        array("message" => "No users found!")
+        array("message" => $result)
     );
 }

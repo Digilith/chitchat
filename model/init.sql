@@ -22,6 +22,15 @@ CREATE TABLE IF NOT EXISTS room (
     FOREIGN KEY (admin_id) REFERENCES person(id)
 );
 
+# table of users in every chat room
+CREATE TABLE IF NOT EXISTS person_room (
+    id INT NOT NULL AUTO_INCREMENT,
+    person_id INT NOT NULL,
+    room_id INT NOT NULL,
+    FOREIGN KEY (room_id) REFERENCES room(id),
+    FOREIGN KEY (person_id) REFERENCES person(id)
+);
+
 CREATE TABLE IF NOT EXISTS message (
     id INT NOT NULL AUTO_INCREMENT,
     person_id INT NOT NULL, #who sent it

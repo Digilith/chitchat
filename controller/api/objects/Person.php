@@ -17,15 +17,9 @@ class Person
         $this->conn = $db;
     }
 
-    function set_params($email, $nickname, $password_hash)
-    {
-        //clean data
-        $this->email = htmlspecialchars(strip_tags($email));
-        $this->nickname = htmlspecialchars(strip_tags($nickname));
-        $this->password_hash = htmlspecialchars(strip_tags($password_hash));
-    }
-
+    //used for creating a new user account upon registration
     function create(): bool {
+        //inserting values into the person table
         $query = "INSERT INTO " . $this->table . " 
                   SET nickname = ?,
                       email = ?,
@@ -33,7 +27,7 @@ class Person
 
         $stmt = $this->conn->prepare($query);
 
-        //clean data
+        //clean user-posted data before insertion
         $this->email = htmlspecialchars($this->email);
         $this->nickname = htmlspecialchars($this->nickname);
         $this->password_hash = htmlspecialchars($this->password_hash);
@@ -50,11 +44,26 @@ class Person
         return false;
     }
 
-    function read()
+    //lists all the users in a room
+    //function read($room_id)
+    function read(room_id)
     {
-        $query = "SELECT id, nickname FROM " . $this->table . " ";
+        $query = "SELECT id, nickname 
+                  FROM " . $this->table . "
+                  ORDER BY id DESC";
+
+        //TODO: implement this PROPERLY, redesign the db
+//        $query = "SELECT id, nickname
+//                  FROM " . $this->table . " as p
+//                  FULL OUTER JOIN person_room
+//                  ON p.id = person_room.id
+//                  WHERE person_room.room_id = ?
+//                  ORDER BY id DESC
+//                  ";
 
         $stmt = $this->conn->prepare($query);
+
+//      $stmt->bind_param("i", $room_id);
 
         $stmt->execute();
 
