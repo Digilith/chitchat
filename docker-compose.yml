@@ -1,0 +1,24 @@
+version: "3"
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - ./model:/docker-entrypoint-initdb.d:ro
+      - db_volume:/var/lib/mysql
+    ports:
+      - "3308:3306"
+  apache:
+    build: ./controller
+    restart: always
+    volumes:
+      - ./controller/content:/var/www/html/
+    ports:
+      - "8081:80"
+    links:
+      - db
+
+volumes:
+  db_volume:
