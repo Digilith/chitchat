@@ -15,9 +15,8 @@ $db = $database->connect();
 //instantiate message
 $message = new Message($db);
 
-// retrieve room id
-$room_id = json_decode(file_get_contents("php://input"));
-$message->room_id = $room_id;
+// get the room id if there's any, else die
+$message->room_id = $_GET['room_id'] ?? die("No messages found!");
 
 $data = $message->read();
 
