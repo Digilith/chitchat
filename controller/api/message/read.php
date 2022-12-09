@@ -16,7 +16,7 @@ $db = $database->connect();
 $message = new Message($db);
 
 // get the room id if there's any, else die
-$message->room_id = $_GET['room_id'] ?? die("No messages found!");
+$message->room_id = $_GET["room_id"] ?? die("No messages found!");
 
 $data = $message->read();
 

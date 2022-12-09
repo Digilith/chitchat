@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS person (
 CREATE TABLE IF NOT EXISTS room (
     id INT NOT NULL AUTO_INCREMENT,
     admin_id INT NOT NULL, #room admin
-    room_name VARCHAR(64) NOT NULL,
+    room_name VARCHAR(64) NOT NULL UNIQUE,
     room_desc TEXT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (admin_id) REFERENCES person(id)

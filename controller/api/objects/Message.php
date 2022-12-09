@@ -45,15 +45,13 @@ class Message
 
     // list all messages in the room
     // TODO: join with the person table to retrieve the username
-    // TODO: fix it!!!!!
     function read (): array {
-        $query = "SELECT person_id, message_txt 
+        $query = "SELECT id, message_txt 
                   FROM " . $this->table . " 
-                  WHERE room_id = ?";
+                  WHERE room_id = " . $this->room_id . " ";
 
         // bind param
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $this->room_id);
+        mysqli_report(MYSQLI_REPORT_ALL);
 
         // retrieving an array of rows
         $stmt = $this->conn->query($query);
@@ -62,6 +60,8 @@ class Message
         $data = [];
 
         // array of row data
+
+        mysqli_report(MYSQLI_REPORT_ALL);
         while ($row = $stmt->fetch_assoc()) {
             $data[] = $row;
         }
