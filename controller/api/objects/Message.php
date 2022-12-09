@@ -44,10 +44,10 @@ class Message
     }
 
     // list all messages in the room
-    // TODO: join with the person table to retrieve the username
     function read (): array {
-        $query = "SELECT id, message_txt 
-                  FROM " . $this->table . " 
+        $query = "SELECT p.nickname, m.message_txt
+                  FROM " . $this->table . " m
+                  LEFT JOIN person p ON m.person_id = p.id
                   WHERE room_id = " . $this->room_id . " ";
 
         // bind param
