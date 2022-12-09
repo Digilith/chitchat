@@ -4,7 +4,7 @@ class Person
 {
     //db connection
     private ?mysqli $conn;
-    private string $table;
+    private string $table = "person";
 
     //properties
     public int $id;
@@ -18,7 +18,7 @@ class Person
     }
 
     //used for creating a new user account upon registration
-    function create(): bool {
+    public function create(): bool {
         //inserting values into the person table
         $query = "INSERT INTO " . $this->table . " 
                   SET nickname = ?,
@@ -46,7 +46,7 @@ class Person
 
     //lists all the users in a room
     //function read($room_id)
-    function read(): array
+    public function read(): array
     {
         $query = "SELECT id, nickname 
                   FROM " . $this->table . " 
@@ -80,7 +80,7 @@ class Person
     // update account info
     // TODO: ability to change not only the nickname
     // TODO: access only for the account owner
-    function update(): bool {
+    public function update(): bool {
         $query = "UPDATE " . $this->table . " 
                   SET nickname = ?
                   WHERE id = ?";
@@ -89,6 +89,7 @@ class Person
 
         //clean user-posted data before insertion
         $this->nickname = htmlspecialchars($this->nickname);
+        $this->id = htmlspecialchars($this->id);
 
         $stmt->bind_param("si",$this->nickname, $this->id);
 
@@ -102,7 +103,25 @@ class Person
         return false;
     }
 
-    function delete() {
+    //delete an account
+    public function delete(): bool{
+        $query = "DELETE FROM " . $this->table . "
+                  WHERE id = ?";
 
+        $stmt = $this->conn->prepare($query);
+
+        // clean the user-put id
+        $this->id = htmlspecialchars($this->id);
+
+        $stmt->bind_param("i",$this->id);
+
+        if($stmt->execute()){
+            return true;
+        }
+
+        //print error if something goes wrong
+        printf("Error: " . $stmt->error);
+
+        return false;
     }
 }
