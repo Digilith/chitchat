@@ -46,20 +46,12 @@ class Person
 
     //lists all the users in a room
     //function read($room_id)
+    // TODO: implement query that lists users only ina given room
     public function read(): array
     {
         $query = "SELECT id, nickname 
                   FROM " . $this->table . " 
                   ORDER BY id DESC";
-
-        //TODO: implement this PROPERLY, redesign the db
-//          $query = "SELECT id, nickname
-//                    FROM person as p
-//                    FULL OUTER JOIN person_room
-//                    ON p.id = person_room.id
-//                    WHERE person_room.room_id = ?
-//                    ORDER BY id DESC
-//                    ";
 
         // retrieving an array of rows
         $stmt = $this->conn->query($query);
@@ -77,8 +69,7 @@ class Person
         return $data;
     }
 
-    // update account info
-    // TODO: ability to change not only the nickname
+    // update account info (nickname)
     // TODO: access only for the account owner
     public function update(): bool {
         $query = "UPDATE " . $this->table . " 

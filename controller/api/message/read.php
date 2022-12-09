@@ -12,8 +12,12 @@ include_once '../objects/Message.php';
 $database = new Database();
 $db = $database->connect();
 
-//instantiate person
+//instantiate message
 $message = new Message($db);
+
+// retrieve room id
+$room_id = json_decode(file_get_contents("php://input"));
+$message->room_id = $room_id;
 
 $data = $message->read();
 

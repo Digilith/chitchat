@@ -26,10 +26,16 @@ class Message
     function read (): array {
         $query = "SELECT person_id, message_txt 
                   FROM " . $this->table . " 
+                  WHERE room_id = ?
                   ORDER BY id DESC";
+
+        // bind the room id
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_params("i", $this->room_id);
 
         // retrieving an array of rows
         $stmt = $this->conn->query($query);
+
 
         // storing them in data
         $data = [];
