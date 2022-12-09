@@ -45,6 +45,7 @@ class Message
 
     // list all messages in the room
     // TODO: join with the person table to retrieve the username
+    // TODO: fix it!!!!!
     function read (): array {
         $query = "SELECT person_id, message_txt 
                   FROM " . $this->table . " 

@@ -1,5 +1,5 @@
 <?php
-
+//todo: put db in config
 class Database
 {
     // db credentials

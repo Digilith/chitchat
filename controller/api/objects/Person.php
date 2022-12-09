@@ -46,7 +46,7 @@ class Person
 
     //lists all the users in a room
     //function read($room_id)
-    // TODO: implement query that lists users only ina given room
+    // TODO: implement query that lists users only in a given room
     public function read(): array
     {
         $query = "SELECT id, nickname 
@@ -63,8 +63,6 @@ class Person
         while ($row = $stmt->fetch_assoc()) {
             $data[] = $row;
         }
-
-//        $stmt->bind_param("i", $room_id);
 
         return $data;
     }

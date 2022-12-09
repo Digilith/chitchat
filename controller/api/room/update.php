@@ -4,32 +4,36 @@
 // TODO: proper access
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: DELETE');
+header('Access-Control-Allow-Methods: PUT');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
-//TODO: person model in model
 include_once '../objects/Database.php';
-include_once '../objects/Message.php';
+include_once '../objects/Room.php';
 
 //instantiate & connect to db
 $database = new Database();
 $db = $database->connect();
 
-//instantiate message
-$message = new Message($db);
+//instantiate person
+$room = new Room($db);
 
 //get id
 $data = json_decode(file_get_contents("php://input"));
-$message->id = $data->id;
 
-// delete account
-// todo: only og can delete their message
-if($message->delete()) {
+// set id for the update
+$room->id = $data->id;
+
+// set properties for the update
+$room->room_name = $data->room_name;
+$room->room_desc = $data->room_desc;
+
+// update room
+if($room->update()) {
     echo json_encode(
-        array('message' => 'Message deleted!')
+        array('message' => 'Update successful!')
     );
 } else {
     echo json_encode(
-        array('message' => 'Failed to delete the message')
+        array('message' => 'Failed to update')
     );
 }
