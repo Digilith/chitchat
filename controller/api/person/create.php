@@ -11,6 +11,7 @@ header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Access-Contr
 include_once '../objects/Database.php';
 include_once '../objects/Person.php';
 
+//TODO: one db entry point
 //instantiate & connect to db
 $database = new Database();
 $db = $database->connect();

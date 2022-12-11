@@ -17,6 +17,7 @@ class Room
         $this->conn = $db;
     }
 
+    // create a room
     function create(): bool{
         $query = "INSERT INTO " . $this->table . " 
                   SET admin_id = ?,
@@ -42,8 +43,9 @@ class Room
         return false;
     }
 
+    // list all the rooms
     function read(): array{
-        $query = "SELECT id, admin_id, room_name, room_desc 
+        $query = "SELECT room_name, room_desc 
                   FROM " . $this->table . " 
                   ORDER BY id DESC";
 
@@ -61,6 +63,7 @@ class Room
         return $data;
     }
 
+    //edit room's name and description
     function update(): bool {
         $query = "UPDATE " . $this->table . " 
                   SET room_name = ?,
@@ -86,11 +89,25 @@ class Room
         return false;
     }
 
-    function delete() {
+    //delete the room
+    function delete(): bool {
+        $query = "DELETE FROM " . $this->table . "
+                  WHERE id = ?";
 
-    }
+        $stmt = $this->conn->prepare($query);
 
-    function delete_person() {
+        // clean the user-put id
+        $this->id = htmlspecialchars($this->id);
 
+        $stmt->bind_param("i",$this->id);
+
+        if($stmt->execute()){
+            return true;
+        }
+
+        //print error if something goes wrong
+        printf("Error: " . $stmt->error);
+
+        return false;
     }
 }

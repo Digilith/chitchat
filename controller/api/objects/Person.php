@@ -46,10 +46,9 @@ class Person
 
     //lists all the users in a room
     //function read($room_id)
-    // TODO: implement query that lists users only in a given room
     public function read(): array
     {
-        $query = "SELECT id, nickname 
+        $query = "SELECT nickname 
                   FROM " . $this->table . " 
                   ORDER BY id DESC";
 
@@ -68,7 +67,6 @@ class Person
     }
 
     // update account info (nickname)
-    // TODO: access only for the account owner
     public function update(): bool {
         $query = "UPDATE " . $this->table . " 
                   SET nickname = ?
